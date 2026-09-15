@@ -8,7 +8,12 @@ const INITIAL_STATE = Object.freeze({
 });
 
 const state = { ...INITIAL_STATE };
-const currentValueElement = document.querySelector(['data-display="current-value"']);
+const currentValueElement = document.querySelector([
+  'data-display="current-value"',
+]);
+const errorMessageElement = document.querySelector(
+  'data-display="error-message"'
+);
 
 function add(a, b) {
   return a + b
@@ -103,4 +108,12 @@ function resetState() {
 
 function updateDisplay(value) {
   currentValueElement.textContent = value;
+}
+
+function showErrorMessage(message) {
+  errorMessageElement.textContent = message;
+}
+
+function clearErrorMessage() {
+  showErrorMessage("");
 }
