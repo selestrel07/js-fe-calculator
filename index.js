@@ -30,3 +30,30 @@ function operate(operator, a, b) {
     // Display an error message if operate() returns null
   }
 }
+
+function getDisplayValue() {
+  if (state.operation !== '' && state.rightOperand !== '') return state.rightOperand
+  return state.leftOperand || '0'
+}
+
+function clearCalculator() {
+  resetState()
+  clearErrorMessage()
+  updateDisplay('0')
+  updateOperationLine()
+}
+
+function deleteLastEntry() {
+  if (state.rightOperand !== '') {
+    state.rightOperand = state.rightOperand.slice(0, -1)
+  } else if (state.operation !== '') {
+    state.operation = ''
+  } else {
+    state.leftOperand = state.leftOperand.slice(0, -1)
+  }
+
+  state.justEvaluated = false
+  clearErrorMessage()
+  updateDisplay(getDisplayValue())
+  updateOperationLine()
+}
