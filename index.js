@@ -11,7 +11,7 @@ const MAX_DECIMAL_LENGTH = 6;
 
 const state = { ...INITIAL_STATE };
 const currentValueElement = document.querySelector(
-  '[data-display="current-value"]',
+  '[data-display="current-value"]'
 );
 const errorMessageElement = document.querySelector(
   '[data-display="error-message"]'
