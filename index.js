@@ -80,3 +80,9 @@ function deleteLastEntry() {
   updateDisplay(getDisplayValue())
   updateOperationLine()
 }
+
+const clearButton = document.querySelector('[data-action="clear"]')
+const backspaceButton = document.querySelector('[data-action="backspace"]')
+
+clearButton.addEventListener('click', clearCalculator)
+backspaceButton.addEventListener('click', deleteLastEntry)
