@@ -8,6 +8,7 @@ const INITIAL_STATE = Object.freeze({
 });
 
 const state = { ...INITIAL_STATE };
+const currentValueElement = document.querySelector(['data-display="current-value"']);
 
 function add(a, b) {
   return a + b
@@ -98,4 +99,8 @@ backspaceButton.addEventListener('click', deleteLastEntry)
 
 function resetState() {
   Object.assign(state, { ...INITIAL_STATE });
+}
+
+function updateDisplay(value) {
+  currentValueElement.textContent = value;
 }
