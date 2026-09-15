@@ -7,6 +7,8 @@ const INITIAL_STATE = Object.freeze({
   justEvaluated: false,
 });
 
+const MAX_DECIMAL_LENGTH = 6;
+
 const state = { ...INITIAL_STATE };
 const currentValueElement = document.querySelector([
   'data-display="current-value"',
@@ -116,4 +118,16 @@ function showErrorMessage(message) {
 
 function clearErrorMessage() {
   showErrorMessage("");
+}
+
+function roundNumber(number) {
+  const numberString = String(number);
+  const dotIndex = numberString.indexOf(".");
+  if (
+    dotIndex !== -1 &&
+    numberString.slice(dotIndex + 1).length > MAX_DECIMAL_LENGTH
+  ) {
+    return String(+number.toFixed(MAX_DECIMAL_LENGTH));
+  }
+  return numberString;
 }
