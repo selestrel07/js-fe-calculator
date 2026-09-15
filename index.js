@@ -1,5 +1,14 @@
 const operationLineElement = document.querySelector('[data-display="operation"]')
 
+const INITIAL_STATE = Object.freeze({
+  leftOperand: "0",
+  rightOperand: "",
+  operation: "",
+  justEvaluated: false,
+});
+
+const state = { ...INITIAL_STATE };
+
 function add(a, b) {
   return a + b
 }
@@ -86,3 +95,7 @@ const backspaceButton = document.querySelector('[data-action="backspace"]')
 
 clearButton.addEventListener('click', clearCalculator)
 backspaceButton.addEventListener('click', deleteLastEntry)
+
+function resetState() {
+  Object.assign(state, { ...INITIAL_STATE });
+}
