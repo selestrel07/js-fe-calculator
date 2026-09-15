@@ -1,7 +1,7 @@
 const operationLineElement = document.querySelector('[data-display="operation"]')
 
 const INITIAL_STATE = Object.freeze({
-  leftOperand: "0",
+  leftOperand: "",
   rightOperand: "",
   operation: "",
   justEvaluated: false,
@@ -10,11 +10,11 @@ const INITIAL_STATE = Object.freeze({
 const MAX_DECIMAL_LENGTH = 6;
 
 const state = { ...INITIAL_STATE };
-const currentValueElement = document.querySelector([
-  'data-display="current-value"',
-]);
+const currentValueElement = document.querySelector(
+  '[data-display="current-value"]',
+);
 const errorMessageElement = document.querySelector(
-  'data-display="error-message"'
+  '[data-display="error-message"]'
 );
 
 function add(a, b) {
