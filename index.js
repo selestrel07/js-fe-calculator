@@ -1,3 +1,5 @@
+const operationLineElement = document.querySelector('[data-display="operation"]')
+
 function add(a, b) {
   return a + b
 }
@@ -29,6 +31,27 @@ function operate(operator, a, b) {
     if (error) return null
     // Display an error message if operate() returns null
   }
+}
+
+const OPERATOR_SYMBOLS = {
+  add: '+',
+  subtract: '-',
+  multiply: '*',
+  divide: '/'
+}
+
+function getOperationText() {
+  if (state.leftOperand === '') return ''
+
+  const symbol = OPERATOR_SYMBOLS[state.operation] || ''
+
+  return [state.leftOperand, symbol, state.rightOperand]
+    .filter((part) => part !== '')
+    .join(' ')
+}
+
+function updateOperationLine() {
+  operationLineElement.textContent = getOperationText()
 }
 
 function getDisplayValue() {
