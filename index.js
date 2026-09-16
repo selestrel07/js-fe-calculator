@@ -120,5 +120,5 @@ document
   .querySelectorAll("[data-digit]")
   .forEach((button) => button.addEventListener("click", handleInputKey));
 document
-  .querySelector('[data-action="decimal')
+  .querySelector('[data-action="decimal"]')
   .addEventListener("click", handleInputKey);
