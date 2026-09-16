@@ -86,3 +86,27 @@ const backspaceButton = document.querySelector('[data-action="backspace"]')
 
 clearButton.addEventListener('click', clearCalculator)
 backspaceButton.addEventListener('click', deleteLastEntry)
+
+function updateOperand(symbol) {
+  let value = state.operation ? state.rightOperand : state.leftOperand;
+  switch (symbol) {
+    case '.': {
+      if (!value) value = '0.';
+      if (value.indexOf(symbol) === -1) value += symbol;
+      break;
+    }
+    case '0': {
+      if (value !== '0') value += symbol;
+      break;
+    }
+    default: {
+      value += symbol;
+    }
+  }
+  if (state.operation) {
+    state.rightOperand = value;
+  } else {
+    state.leftOperand = value;
+  }
+  return value;
+}
