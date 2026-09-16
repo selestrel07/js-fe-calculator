@@ -1,5 +1,19 @@
 const operationLineElement = document.querySelector('[data-display="operation"]')
 
+const INITIAL_STATE = Object.freeze({
+  leftOperand: "",
+  rightOperand: "",
+  operator: "",
+  justEvaluated: false,
+});
+
+const MAX_DECIMAL_LENGTH = 6;
+
+const state = { ...INITIAL_STATE };
+const currentValueElement = document.querySelector(
+  '[data-display="current-value"]'
+);
+
 function add(a, b) {
   return a + b
 }
@@ -86,3 +100,27 @@ const backspaceButton = document.querySelector('[data-action="backspace"]')
 
 clearButton.addEventListener('click', clearCalculator)
 backspaceButton.addEventListener('click', deleteLastEntry)
+
+function resetState() {
+  Object.assign(state, { ...INITIAL_STATE });
+}
+
+function updateDisplay(value) {
+  currentValueElement.textContent = value;
+}
+
+function showErrorMessage(message) {
+  updateDisplay(message);
+}
+
+function roundNumber(number) {
+  const numberString = String(number);
+  const dotIndex = numberString.indexOf(".");
+  if (
+    dotIndex !== -1 &&
+    numberString.slice(dotIndex + 1).length > MAX_DECIMAL_LENGTH
+  ) {
+    return String(+number.toFixed(MAX_DECIMAL_LENGTH));
+  }
+  return numberString;
+}
