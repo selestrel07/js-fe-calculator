@@ -49,6 +49,7 @@ const KEY_SELECTORS = {
   '=': '[data-action="equals"]',
   Enter: '[data-action="equals"]',
   Backspace: '[data-action="backspace"]',
+  Delete: '[data-action="clear"]',
   Escape: '[data-action="clear"]'
 }
 
