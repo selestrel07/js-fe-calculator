@@ -13,9 +13,6 @@ const state = { ...INITIAL_STATE };
 const currentValueElement = document.querySelector(
   '[data-display="current-value"]'
 );
-const errorMessageElement = document.querySelector(
-  '[data-display="error-message"]'
-);
 
 function add(a, b) {
   return a + b
@@ -113,11 +110,7 @@ function updateDisplay(value) {
 }
 
 function showErrorMessage(message) {
-  errorMessageElement.textContent = message;
-}
-
-function clearErrorMessage() {
-  showErrorMessage("");
+  updateDisplay(message);
 }
 
 function roundNumber(number) {
