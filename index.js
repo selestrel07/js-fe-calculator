@@ -88,7 +88,7 @@ clearButton.addEventListener('click', clearCalculator)
 backspaceButton.addEventListener('click', deleteLastEntry)
 
 function updateOperand(symbol) {
-  let value = state.operation ? state.rightOperand : state.leftOperand;
+  let value = state.operator ? state.rightOperand : state.leftOperand;
   switch (symbol) {
     case ".": {
       if (!value) value = "0.";
@@ -103,7 +103,7 @@ function updateOperand(symbol) {
       value += symbol;
     }
   }
-  if (state.operation) {
+  if (state.operator) {
     state.rightOperand = value;
   } else {
     state.leftOperand = value;
