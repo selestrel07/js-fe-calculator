@@ -90,13 +90,13 @@ backspaceButton.addEventListener('click', deleteLastEntry)
 function updateOperand(symbol) {
   let value = state.operation ? state.rightOperand : state.leftOperand;
   switch (symbol) {
-    case '.': {
-      if (!value) value = '0.';
+    case ".": {
+      if (!value) value = "0.";
       if (value.indexOf(symbol) === -1) value += symbol;
       break;
     }
-    case '0': {
-      if (value !== '0') value += symbol;
+    case "0": {
+      if (value !== "0") value += symbol;
       break;
     }
     default: {
@@ -110,3 +110,15 @@ function updateOperand(symbol) {
   }
   return value;
 }
+
+function handleInputKey(event) {
+  clearErrorMessage();
+  updateDisplay(updateOperand(event.target.textContent));
+}
+
+document
+  .querySelectorAll("[data-digit]")
+  .forEach((button) => button.addEventListener("click", handleInputKey));
+document
+  .querySelector('[data-action="decimal')
+  .addEventListener("click", handleInputKey);
