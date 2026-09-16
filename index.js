@@ -56,7 +56,7 @@ const KEY_SELECTORS = {
 function getOperationText() {
   if (state.leftOperand === '') return ''
 
-  const symbol = OPERATOR_SYMBOLS[state.operation] || ''
+  const symbol = OPERATOR_SYMBOLS[state.operator] || ''
 
   return [state.leftOperand, symbol, state.rightOperand]
     .filter((part) => part !== '')
@@ -68,7 +68,7 @@ function updateOperationLine() {
 }
 
 function getDisplayValue() {
-  if (state.operation !== '' && state.rightOperand !== '') return state.rightOperand
+  if (state.operator !== '' && state.rightOperand !== '') return state.rightOperand
   return state.leftOperand || '0'
 }
 
@@ -82,8 +82,8 @@ function clearCalculator() {
 function deleteLastEntry() {
   if (state.rightOperand !== '') {
     state.rightOperand = state.rightOperand.slice(0, -1)
-  } else if (state.operation !== '') {
-    state.operation = ''
+  } else if (state.operator !== '') {
+    state.operator = ''
   } else {
     state.leftOperand = state.leftOperand.slice(0, -1)
   }
