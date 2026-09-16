@@ -100,7 +100,11 @@ function updateOperand(symbol) {
       break;
     }
     default: {
-      value += symbol;
+      if (value !== "0") {
+        value += symbol;
+      } else {
+        value = symbol;
+      }
     }
   }
   if (state.operator) {
