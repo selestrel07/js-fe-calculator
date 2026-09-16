@@ -3,7 +3,7 @@ const operationLineElement = document.querySelector('[data-display="operation"]'
 const INITIAL_STATE = Object.freeze({
   leftOperand: "",
   rightOperand: "",
-  operation: "",
+  operator: "",
   justEvaluated: false,
 });
 
