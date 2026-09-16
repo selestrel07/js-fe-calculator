@@ -40,6 +40,18 @@ const OPERATOR_SYMBOLS = {
   divide: '/'
 }
 
+const KEY_SELECTORS = {
+  '+': '[data-operator="add"]',
+  '-': '[data-operator="subtract"]',
+  '*': '[data-operator="multiply"]',
+  '/': '[data-operator="divide"]',
+  '.': '[data-action="decimal"]',
+  '=': '[data-action="equals"]',
+  Enter: '[data-action="equals"]',
+  Backspace: '[data-action="backspace"]',
+  Escape: '[data-action="clear"]'
+}
+
 function getOperationText() {
   if (state.leftOperand === '') return ''
 
@@ -86,3 +98,25 @@ const backspaceButton = document.querySelector('[data-action="backspace"]')
 
 clearButton.addEventListener('click', clearCalculator)
 backspaceButton.addEventListener('click', deleteLastEntry)
+
+function getButtonForKey(key) {
+  if (key.length === 1 && key >= '0' && key <= '9') {
+    return document.querySelector(`[data-digit="${key}"]`)
+  }
+
+  const selector = KEY_SELECTORS[key]
+
+  if (!selector) {
+    return null
+  }
+
+  return document.querySelector(selector)
+}
+
+document.addEventListener('keydown', (event) => {
+  const button = getButtonForKey(event.key)
+  if (!button) return
+
+  event.preventDefault()
+  button.click()
+})
