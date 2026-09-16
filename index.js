@@ -1,3 +1,5 @@
+const operationLineElement = document.querySelector('[data-display="operation"]')
+
 function add(a, b) {
   return a + b
 }
@@ -30,3 +32,57 @@ function operate(operator, a, b) {
     // Display an error message if operate() returns null
   }
 }
+
+const OPERATOR_SYMBOLS = {
+  add: '+',
+  subtract: '-',
+  multiply: '*',
+  divide: '/'
+}
+
+function getOperationText() {
+  if (state.leftOperand === '') return ''
+
+  const symbol = OPERATOR_SYMBOLS[state.operation] || ''
+
+  return [state.leftOperand, symbol, state.rightOperand]
+    .filter((part) => part !== '')
+    .join(' ')
+}
+
+function updateOperationLine() {
+  operationLineElement.textContent = getOperationText()
+}
+
+function getDisplayValue() {
+  if (state.operation !== '' && state.rightOperand !== '') return state.rightOperand
+  return state.leftOperand || '0'
+}
+
+function clearCalculator() {
+  resetState()
+  clearErrorMessage()
+  updateDisplay('0')
+  updateOperationLine()
+}
+
+function deleteLastEntry() {
+  if (state.rightOperand !== '') {
+    state.rightOperand = state.rightOperand.slice(0, -1)
+  } else if (state.operation !== '') {
+    state.operation = ''
+  } else {
+    state.leftOperand = state.leftOperand.slice(0, -1)
+  }
+
+  state.justEvaluated = false
+  clearErrorMessage()
+  updateDisplay(getDisplayValue())
+  updateOperationLine()
+}
+
+const clearButton = document.querySelector('[data-action="clear"]')
+const backspaceButton = document.querySelector('[data-action="backspace"]')
+
+clearButton.addEventListener('click', clearCalculator)
+backspaceButton.addEventListener('click', deleteLastEntry)
