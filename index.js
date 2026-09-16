@@ -74,7 +74,6 @@ function getDisplayValue() {
 
 function clearCalculator() {
   resetState()
-  clearErrorMessage()
   updateDisplay('0')
   updateOperationLine()
 }
@@ -89,7 +88,6 @@ function deleteLastEntry() {
   }
 
   state.justEvaluated = false
-  clearErrorMessage()
   updateDisplay(getDisplayValue())
   updateOperationLine()
 }
