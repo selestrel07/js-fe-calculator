@@ -1,0 +1,199 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #1a1a2e;
+  font-family: Arial, sans-serif;
+}
+
+
+/* Calculator */
+.calculator {
+  width: 320px;
+  padding: 20px;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto repeat(5, 60px);
+  gap: 8px;
+  grid-template-areas:
+    "display display display display"
+    "clear backspace add subtract"
+    "seven eight nine multiply"
+    "four five six divide"
+    "one two three equals"
+    "zero zero decimal equals";
+
+  background-color: #22223b;
+  border-radius: 20px;
+}
+
+
+/* Display */
+.display {
+  padding: 15px;
+
+  grid-area: display;
+
+  background-color: #141425;
+  color: white;
+  text-align: right;
+  border-radius: 10px;
+}
+
+.operation {
+  min-height: 25px;
+
+  color: #9999aa;
+  font-size: 18px;
+}
+
+.current-value {
+  min-height: 50px;
+
+  font-size: 40px;
+  font-weight: bold;
+}
+
+
+/* Buttons */
+button {
+  height: 60px;
+
+  background-color: #30304d;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+
+  cursor: pointer;
+  transition: 0.15s;
+}
+
+button:hover {
+  background-color: #444466;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+
+/* Decimal point and Backspace buttons */
+.decimal, 
+.backspace {
+  background-color: #55556f;
+}
+
+/* Decimal */
+.decimal {
+  grid-area: decimal;
+}
+
+/* Backspace button */
+.backspace {
+  grid-area: backspace;
+}
+
+/* Clear button */
+.clear {
+  grid-area: clear;
+
+  background-color: #e63946;
+}
+
+.clear:hover {
+  background-color: #f04f5c;
+}
+
+
+/* Operator buttons */
+.operator {
+  background-color: #ff9500;
+}
+
+.operator:hover {
+  background-color: #ffaa33;
+}
+
+.add {
+  grid-area: add;
+}
+
+.subtract {
+  grid-area: subtract;
+}
+
+.multiply {
+  grid-area: multiply;
+}
+
+.divide {
+  grid-area: divide;
+}
+
+
+/* Numbers */
+.seven {
+  grid-area: seven;
+}
+
+.eight {
+  grid-area: eight;
+}
+
+.nine {
+  grid-area: nine;
+}
+
+.four {
+  grid-area: four;
+}
+
+.five {
+  grid-area: five;
+}
+
+.six {
+  grid-area: six;
+}
+
+.one {
+  grid-area: one;
+}
+
+.two {
+  grid-area: two;
+}
+
+.three {
+  grid-area: three;
+}
+
+.zero {
+  grid-area: zero;
+}
+
+
+/* Equals button */
+.equals {
+  height: auto;
+
+  grid-area: equals;
+
+  background-color: #28a745;
+}
+
+.equals:hover {
+  background-color: #34c759;
+}

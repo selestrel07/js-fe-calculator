@@ -8,30 +8,40 @@
     <title>Calculator</title>
   </head>
   <body>
-    <p data-display="operation"></p>
-    <p data-display="current-value">0</p>
 
-    <button data-action="clear">C</button>
-    <button data-action="backspace">←</button>
-    <button data-operator="add">+</button>
-    <button data-operator="subtract">-</button>
+    <div class="calculator">
 
-    <button data-digit="7">7</button>
-    <button data-digit="8">8</button>
-    <button data-digit="9">9</button>
-    <button data-operator="multiply">*</button>
+      <!-- Display -->
+      <div class="display">
+        <p class="operation" data-display="operation"></p>
+        <p class="current-value" data-display="current-value">0</p>
+      </div>
 
-    <button data-digit="4">4</button>
-    <button data-digit="5">5</button>
-    <button data-digit="6">6</button>
-    <button data-operator="divide">/</button>
+      <!-- Buttons -->
+      <button class="clear" data-action="clear">C</button>
+      <button class="backspace" data-action="backspace">←</button>
+      <button class="operator add" data-operator="add">+</button>
+      <button class="operator subtract" data-operator="subtract">-</button>
 
-    <button data-digit="1">1</button>
-    <button data-digit="2">2</button>
-    <button data-digit="3">3</button>
-    <button data-action="equals">=</button>
+      <button class="number seven" data-digit="7">7</button>
+      <button class="number eight" data-digit="8">8</button>
+      <button class="number nine" data-digit="9">9</button>
+      <button class="operator multiply" data-operator="multiply">*</button>
 
-    <button data-digit="0">0</button>
-    <button data-action="decimal">.</button>
+      <button class="number four" data-digit="4">4</button>
+      <button class="number five" data-digit="5">5</button>
+      <button class="number six" data-digit="6">6</button>
+      <button class="operator divide" data-operator="divide">/</button>
+
+      <button class="number one" data-digit="1">1</button>
+      <button class="number two" data-digit="2">2</button>
+      <button class="number three" data-digit="3">3</button>
+      <button class="equals" data-action="equals">=</button>
+
+      <button class="number zero" data-digit="0">0</button>
+      <button class="decimal" data-action="decimal">.</button>
+
+    </div>
+
   </body>
 </html>
