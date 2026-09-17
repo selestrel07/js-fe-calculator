@@ -99,6 +99,47 @@ const backspaceButton = document.querySelector('[data-action="backspace"]')
 clearButton.addEventListener('click', clearCalculator)
 backspaceButton.addEventListener('click', deleteLastEntry)
 
+function updateActiveOperand(input) {
+  let value = state.operator ? state.rightOperand : state.leftOperand;
+  switch (input) {
+    case ".": {
+      if (!value) value = "0.";
+      if (value.indexOf(input) === -1) value += input;
+      break;
+    }
+    case "0": {
+      if (value !== "0") value += input;
+      break;
+    }
+    default: {
+      if (value !== "0") {
+        value += input;
+      } else {
+        value = input;
+      }
+    }
+  }
+  if (state.operator) {
+    state.rightOperand = value;
+  } else {
+    state.leftOperand = value;
+  }
+  return value;
+}
+
+function handleInputKey(event) {
+  if (state.justEvaluated) resetState();
+  updateDisplay(updateActiveOperand(event.target.textContent));
+  updateOperationLine();
+}
+
+document
+  .querySelectorAll("[data-digit]")
+  .forEach((button) => button.addEventListener("click", handleInputKey));
+document
+  .querySelector('[data-action="decimal"]')
+  .addEventListener("click", handleInputKey);
+
 function resetState() {
   Object.assign(state, { ...INITIAL_STATE });
 }
