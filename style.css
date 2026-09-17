@@ -11,20 +11,21 @@ body {
   justify-content: center;
   align-items: center;
 
-  background-color: #1a1a2e;
+  background-color: #15171d;
   font-family: Arial, sans-serif;
 }
 
 
 /* Calculator */
 .calculator {
-  width: 320px;
-  padding: 20px;
+  width: 340px;
+  padding: 18px 18px 22px;
 
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: auto repeat(5, 60px);
-  gap: 8px;
+  row-gap: 12px;
+  column-gap: 10px;
   grid-template-areas:
     "display display display display"
     "clear backspace add subtract"
@@ -33,35 +34,45 @@ body {
     "one two three equals"
     "zero zero decimal equals";
 
-  background-color: #22223b;
-  border-radius: 20px;
+  background-color: #30343e;
+  border-radius: 24px;
 }
 
 
 /* Display */
 .display {
-  padding: 15px;
+  min-height: 95px;
+  padding: 16px;
+  margin-bottom: 8px;
 
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
   grid-area: display;
 
-  background-color: #141425;
-  color: white;
+  background-color: #bdcba7;
+  color: #151914;
   text-align: right;
-  border-radius: 10px;
+  border-radius: 16px;
+  overflow: hidden;
 }
 
 .operation {
-  min-height: 25px;
+  min-height: 22px;
 
-  color: #9999aa;
-  font-size: 18px;
+  color: #5f6657;
+  font-size: 16px;
+  font-weight: 500;
 }
 
 .current-value {
-  min-height: 50px;
+  min-height: 45px;
 
+  color: #11150f;
   font-size: 40px;
-  font-weight: bold;
+  font-weight: 700;
+  line-height: 1;
 }
 
 
@@ -69,61 +80,49 @@ body {
 button {
   height: 60px;
 
-  background-color: #30304d;
-  color: white;
+  background-color: #eeece7;
+  color: #151922;
   font-size: 24px;
-  font-weight: bold;
-  border: none;
-  border-radius: 12px;
-
+  font-weight: 700;
   cursor: pointer;
-  transition: 0.15s;
-}
+  box-shadow: 0 4px 0 #c6c4be;
+  transition:
+    background-color 0.1s ease,
+    transform 0.1s ease,
+    box-shadow 0.1s ease;
 
-button:hover {
-  background-color: #444466;
+  border: none;
+  border-radius: 14px;
 }
 
 button:active {
-  transform: scale(0.95);
+  transform: translateY(3px);
 }
 
 
 /* Decimal point and Backspace buttons */
-.decimal, 
+.decimal,
 .backspace {
-  background-color: #55556f;
-}
-
-/* Decimal */
-.decimal {
-  grid-area: decimal;
-}
-
-/* Backspace button */
-.backspace {
-  grid-area: backspace;
+  background-color: #737c8d;
+  color: white;
+  box-shadow: 0 4px 0 #596171;
 }
 
 /* Clear button */
 .clear {
   grid-area: clear;
 
-  background-color: #e63946;
-}
-
-.clear:hover {
-  background-color: #f04f5c;
+  background-color: #737c8d;
+  color: white;
+  box-shadow: 0 4px 0 #596171;
 }
 
 
 /* Operator buttons */
 .operator {
-  background-color: #ff9500;
-}
-
-.operator:hover {
-  background-color: #ffaa33;
+  background-color: #f5a431;
+  color: #17130c;
+  box-shadow: 0 4px 0 #c47c1b;
 }
 
 .add {
@@ -143,7 +142,7 @@ button:active {
 }
 
 
-/* Numbers */
+/* Number buttons */
 .seven {
   grid-area: seven;
 }
@@ -191,9 +190,7 @@ button:active {
 
   grid-area: equals;
 
-  background-color: #28a745;
-}
-
-.equals:hover {
-  background-color: #34c759;
+  background-color: #2d857c;
+  color: white;
+  box-shadow: 0 4px 0 #21655f;
 }
