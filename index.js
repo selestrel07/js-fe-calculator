@@ -1,5 +1,19 @@
 const operationLineElement = document.querySelector('[data-display="operation"]')
 
+const INITIAL_STATE = Object.freeze({
+  leftOperand: "",
+  rightOperand: "",
+  operator: "",
+  justEvaluated: false,
+});
+
+const MAX_DECIMAL_LENGTH = 6;
+
+const state = { ...INITIAL_STATE };
+const currentValueElement = document.querySelector(
+  '[data-display="current-value"]'
+);
+
 function add(a, b) {
   return a + b
 }
@@ -43,7 +57,7 @@ const OPERATOR_inputS = {
 function getOperationText() {
   if (state.leftOperand === '') return ''
 
-  const input = OPERATOR_inputS[state.operation] || ''
+  const symbol = OPERATOR_SYMBOLS[state.operator] || ''
 
   return [state.leftOperand, input, state.rightOperand]
     .filter((part) => part !== '')
@@ -55,13 +69,12 @@ function updateOperationLine() {
 }
 
 function getDisplayValue() {
-  if (state.operation !== '' && state.rightOperand !== '') return state.rightOperand
+  if (state.operator !== '' && state.rightOperand !== '') return state.rightOperand
   return state.leftOperand || '0'
 }
 
 function clearCalculator() {
   resetState()
-  clearErrorMessage()
   updateDisplay('0')
   updateOperationLine()
 }
@@ -69,14 +82,13 @@ function clearCalculator() {
 function deleteLastEntry() {
   if (state.rightOperand !== '') {
     state.rightOperand = state.rightOperand.slice(0, -1)
-  } else if (state.operation !== '') {
-    state.operation = ''
+  } else if (state.operator !== '') {
+    state.operator = ''
   } else {
     state.leftOperand = state.leftOperand.slice(0, -1)
   }
 
   state.justEvaluated = false
-  clearErrorMessage()
   updateDisplay(getDisplayValue())
   updateOperationLine()
 }
@@ -126,3 +138,52 @@ document
 document
   .querySelector('[data-action="decimal"]')
   .addEventListener("click", handleInputKey);
+
+function resetState() {
+  Object.assign(state, { ...INITIAL_STATE });
+}
+
+function updateDisplay(value) {
+  currentValueElement.textContent = value;
+}
+
+function showErrorMessage(message) {
+  updateDisplay(message);
+}
+
+function roundNumber(number) {
+  const numberString = String(number);
+  const dotIndex = numberString.indexOf(".");
+  if (
+    dotIndex !== -1 &&
+    numberString.slice(dotIndex + 1).length > MAX_DECIMAL_LENGTH
+  ) {
+    return String(+number.toFixed(MAX_DECIMAL_LENGTH));
+  }
+  return numberString;
+}
+
+const KEY_BUTTONS = {
+  '+': document.querySelector('[data-operator="add"]'),
+  '-': document.querySelector('[data-operator="subtract"]'),
+  '*': document.querySelector('[data-operator="multiply"]'),
+  '/': document.querySelector('[data-operator="divide"]'),
+  '.': document.querySelector('[data-action="decimal"]'),
+  '=': document.querySelector('[data-action="equals"]'),
+  Enter: document.querySelector('[data-action="equals"]'),
+  Backspace: backspaceButton,
+  Delete: clearButton,
+  Escape: clearButton
+}
+
+document.querySelectorAll('[data-digit]').forEach((button) => {
+  KEY_BUTTONS[button.dataset.digit] = button
+})
+
+document.addEventListener('keydown', (event) => {
+  const button = KEY_BUTTONS[event.key]
+  if (!button) return
+
+  event.preventDefault()
+  button.click()
+})
