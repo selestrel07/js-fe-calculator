@@ -128,6 +128,7 @@ function updateActiveOperand(input) {
 }
 
 function handleInputKey(event) {
+  if (state.justEvaluated) resetState();
   updateDisplay(updateActiveOperand(event.target.textContent));
   updateOperationLine();
 }
