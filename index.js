@@ -93,11 +93,30 @@ function deleteLastEntry() {
   updateOperationLine()
 }
 
+function handleOperator(operator) {
+  if (state.leftOperand === '') return
+
+  if (state.rightOperand !== '') {
+    completeOperation()
+
+    if (state.rightOperand !== '') return
+  }
+
+  state.operator = operator
+  state.justEvaluated = false
+  updateOperationLine()
+}
+
 const clearButton = document.querySelector('[data-action="clear"]')
 const backspaceButton = document.querySelector('[data-action="backspace"]')
+const operatorButtons = document.querySelectorAll('[data-operator]')
 
 clearButton.addEventListener('click', clearCalculator)
 backspaceButton.addEventListener('click', deleteLastEntry)
+
+operatorButtons.forEach((button) => {
+  button.addEventListener('click', () => handleOperator(button.dataset.operator))
+})
 
 function resetState() {
   Object.assign(state, { ...INITIAL_STATE });
