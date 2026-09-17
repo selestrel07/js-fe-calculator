@@ -59,7 +59,7 @@ function getOperationText() {
 
   const symbol = OPERATOR_SYMBOLS[state.operator] || ''
 
-  return [state.leftOperand, input, state.rightOperand]
+  return [state.leftOperand, symbol, state.rightOperand]
     .filter((part) => part !== '')
     .join(' ')
 }
