@@ -47,7 +47,7 @@ function operate(operator, a, b) {
   }
 }
 
-const OPERATOR_inputS = {
+const OPERATOR_SYMBOLS = {
   add: '+',
   subtract: '-',
   multiply: '*',
