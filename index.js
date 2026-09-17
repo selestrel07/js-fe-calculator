@@ -116,8 +116,8 @@ function updateOperand(symbol) {
 }
 
 function handleInputKey(event) {
-  updateOperationLine();
   updateDisplay(updateOperand(event.target.textContent));
+  updateOperationLine();
 }
 
 document
