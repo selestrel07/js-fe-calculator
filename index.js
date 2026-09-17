@@ -33,7 +33,7 @@ function operate(operator, a, b) {
   }
 }
 
-const OPERATOR_SYMBOLS = {
+const OPERATOR_inputS = {
   add: '+',
   subtract: '-',
   multiply: '*',
@@ -43,9 +43,9 @@ const OPERATOR_SYMBOLS = {
 function getOperationText() {
   if (state.leftOperand === '') return ''
 
-  const symbol = OPERATOR_SYMBOLS[state.operation] || ''
+  const input = OPERATOR_inputS[state.operation] || ''
 
-  return [state.leftOperand, symbol, state.rightOperand]
+  return [state.leftOperand, input, state.rightOperand]
     .filter((part) => part !== '')
     .join(' ')
 }
@@ -87,23 +87,23 @@ const backspaceButton = document.querySelector('[data-action="backspace"]')
 clearButton.addEventListener('click', clearCalculator)
 backspaceButton.addEventListener('click', deleteLastEntry)
 
-function updateOperand(symbol) {
+function updateActiveOperand(input) {
   let value = state.operator ? state.rightOperand : state.leftOperand;
-  switch (symbol) {
+  switch (input) {
     case ".": {
       if (!value) value = "0.";
-      if (value.indexOf(symbol) === -1) value += symbol;
+      if (value.indexOf(input) === -1) value += input;
       break;
     }
     case "0": {
-      if (value !== "0") value += symbol;
+      if (value !== "0") value += input;
       break;
     }
     default: {
       if (value !== "0") {
-        value += symbol;
+        value += input;
       } else {
-        value = symbol;
+        value = input;
       }
     }
   }
@@ -116,7 +116,7 @@ function updateOperand(symbol) {
 }
 
 function handleInputKey(event) {
-  updateDisplay(updateOperand(event.target.textContent));
+  updateDisplay(updateActiveOperand(event.target.textContent));
   updateOperationLine();
 }
 
