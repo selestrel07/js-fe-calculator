@@ -99,7 +99,7 @@ function handleOperator(operator) {
   if (state.rightOperand !== '') {
     completeOperation()
 
-    if (state.rightOperand !== '') return
+    if (!state.justEvaluated) return
   }
 
   state.operator = operator
