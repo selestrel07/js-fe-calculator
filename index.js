@@ -154,7 +154,7 @@ function completeOperation(event) {
       );
       if (event) updateOperationLine(event.target.textContent);
       resetState();
-      state.leftOperand = result;
+      state.leftOperand = String(result);
       state.justEvaluated = true;
       updateDisplay(roundNumber(getDisplayValue()));
     } catch (error) {
