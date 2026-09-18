@@ -43,9 +43,9 @@ function operate(operator, a, b) {
 
 const OPERATOR_SYMBOLS = {
   add: '+',
-  subtract: '-',
-  multiply: '*',
-  divide: '/'
+  subtract: '−',
+  multiply: '×',
+  divide: '÷'
 }
 
 function getOperationText() {
@@ -164,10 +164,14 @@ function fitDisplay() {
 
   currentValueElement.style.fontSize = `${fontSize}px`;
 
-  while (
-    currentValueElement.scrollWidth > currentValueElement.parentElement.clientWidth &&
-    fontSize > 16
-  ) {
+  const display = currentValueElement.parentElement;
+  const styles = getComputedStyle(display);
+  const available =
+    display.clientWidth -
+    parseFloat(styles.paddingLeft) -
+    parseFloat(styles.paddingRight);
+
+  while (currentValueElement.scrollWidth > available && fontSize > 1) {
     fontSize--;
     currentValueElement.style.fontSize = `${fontSize}px`;
   }
