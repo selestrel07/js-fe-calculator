@@ -174,7 +174,7 @@ function roundNumber(number) {
     dotIndex !== -1 &&
     numberString.slice(dotIndex + 1).length > MAX_DECIMAL_LENGTH
   ) {
-    return String(+number.toFixed(MAX_DECIMAL_LENGTH));
+    return String(Number(number).toFixed(MAX_DECIMAL_LENGTH));
   }
   return numberString;
 }
