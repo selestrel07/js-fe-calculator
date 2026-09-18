@@ -214,6 +214,7 @@ function completeOperation(event) {
       updateDisplay(getDisplayValue());
     } catch (error) {
       updateDisplay(error.message);
+      resetState();
     }
   }
 }
