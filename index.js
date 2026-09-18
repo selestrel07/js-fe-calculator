@@ -32,19 +32,13 @@ function divide(a, b) {
 }
 
 function operate(operator, a, b) {
-  a = Number(a)
-  b = Number(b)
+  a = Number(a);
+  b = Number(b);
 
-  try {
-    if (operator === 'add') return add(a, b)
-    else if (operator === 'subtract') return subtract(a, b)
-    else if (operator === 'multiply') return multiply(a, b)
-    else if (operator === 'divide') return divide(a, b)
-
-  } catch (error) {
-    if (error) return null
-    // Display an error message if operate() returns null
-  }
+  if (operator === "add") return add(a, b);
+  else if (operator === "subtract") return subtract(a, b);
+  else if (operator === "multiply") return multiply(a, b);
+  else if (operator === "divide") return divide(a, b);
 }
 
 const OPERATOR_SYMBOLS = {
@@ -64,8 +58,10 @@ function getOperationText() {
     .join(' ')
 }
 
-function updateOperationLine() {
-  operationLineElement.textContent = getOperationText()
+function updateOperationLine(input) {
+  operationLineElement.textContent = `${getOperationText()} ${
+    input ? ` ${input}` : ""
+  }`;
 }
 
 function getDisplayValue() {
@@ -207,3 +203,24 @@ document.addEventListener('keydown', (event) => {
   event.preventDefault()
   button.click()
 })
+
+function completeOperation(event) {
+  if (state.operator && state.rightOperand !== "") {
+    try {
+      const result = operate(
+        state.operator,
+        state.leftOperand,
+        state.rightOperand
+      );
+      if (event) updateOperationLine(event.target.textContent);
+      resetState();
+      state.leftOperand = String(result);
+      state.justEvaluated = true;
+      updateDisplay(roundNumber(getDisplayValue()));
+    } catch (error) {
+      updateDisplay(error.message);
+    }
+  }
+}
+
+KEY_BUTTONS["="].addEventListener("click", completeOperation);
