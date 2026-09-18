@@ -43,9 +43,9 @@ function operate(operator, a, b) {
 
 const OPERATOR_SYMBOLS = {
   add: '+',
-  subtract: '-',
-  multiply: '*',
-  divide: '/'
+  subtract: '−',
+  multiply: '×',
+  divide: '÷'
 }
 
 function getOperationText() {
@@ -161,8 +161,27 @@ function resetState() {
   Object.assign(state, { ...INITIAL_STATE });
 }
 
+function fitDisplay() {
+  let fontSize = 40;
+
+  currentValueElement.style.fontSize = `${fontSize}px`;
+
+  const display = currentValueElement.parentElement;
+  const styles = getComputedStyle(display);
+  const available =
+    display.clientWidth -
+    parseFloat(styles.paddingLeft) -
+    parseFloat(styles.paddingRight);
+
+  while (currentValueElement.scrollWidth > available && fontSize > 1) {
+    fontSize--;
+    currentValueElement.style.fontSize = `${fontSize}px`;
+  }
+}
+
 function updateDisplay(value) {
   currentValueElement.textContent = value;
+  fitDisplay()
 }
 
 function showErrorMessage(message) {
