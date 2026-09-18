@@ -32,19 +32,13 @@ function divide(a, b) {
 }
 
 function operate(operator, a, b) {
-  a = Number(a)
-  b = Number(b)
+  a = Number(a);
+  b = Number(b);
 
-  try {
-    if (operator === 'add') return add(a, b)
-    else if (operator === 'subtract') return subtract(a, b)
-    else if (operator === 'multiply') return multiply(a, b)
-    else if (operator === 'divide') return divide(a, b)
-
-  } catch (error) {
-    if (error) return null
-    // Display an error message if operate() returns null
-  }
+  if (operator === "add") return add(a, b);
+  else if (operator === "subtract") return subtract(a, b);
+  else if (operator === "multiply") return multiply(a, b);
+  else if (operator === "divide") return divide(a, b);
 }
 
 const OPERATOR_SYMBOLS = {
@@ -64,8 +58,10 @@ function getOperationText() {
     .join(' ')
 }
 
-function updateOperationLine() {
-  operationLineElement.textContent = getOperationText()
+function updateOperationLine(input) {
+  operationLineElement.textContent = `${getOperationText()} ${
+    input ? ` ${input}` : ""
+  }`;
 }
 
 function getDisplayValue() {
@@ -93,11 +89,71 @@ function deleteLastEntry() {
   updateOperationLine()
 }
 
+function handleOperator(operator) {
+  if (state.leftOperand === '') return
+
+  if (state.rightOperand !== '') {
+    completeOperation()
+
+    if (!state.justEvaluated) return
+  }
+
+  state.operator = operator
+  state.justEvaluated = false
+  updateOperationLine()
+}
+
 const clearButton = document.querySelector('[data-action="clear"]')
 const backspaceButton = document.querySelector('[data-action="backspace"]')
+const operatorButtons = document.querySelectorAll('[data-operator]')
 
 clearButton.addEventListener('click', clearCalculator)
 backspaceButton.addEventListener('click', deleteLastEntry)
+
+operatorButtons.forEach((button) => {
+  button.addEventListener('click', () => handleOperator(button.dataset.operator))
+})
+
+function updateActiveOperand(input) {
+  let value = state.operator ? state.rightOperand : state.leftOperand;
+  switch (input) {
+    case ".": {
+      if (!value) value = "0.";
+      if (value.indexOf(input) === -1) value += input;
+      break;
+    }
+    case "0": {
+      if (value !== "0") value += input;
+      break;
+    }
+    default: {
+      if (value !== "0") {
+        value += input;
+      } else {
+        value = input;
+      }
+    }
+  }
+  if (state.operator) {
+    state.rightOperand = value;
+  } else {
+    state.leftOperand = value;
+  }
+  return value;
+}
+
+function handleInputKey(event) {
+  if (state.justEvaluated) resetState();
+  updateDisplay(updateActiveOperand(event.target.textContent));
+  updateOperationLine();
+}
+
+document
+  .querySelectorAll("[data-digit]")
+  .forEach((button) => button.addEventListener("click", handleInputKey));
+document
+  .querySelector('[data-action="decimal"]')
+  .addEventListener("click", handleInputKey);
 
 function resetState() {
   Object.assign(state, { ...INITIAL_STATE });
@@ -162,3 +218,24 @@ document.addEventListener('keydown', (event) => {
   event.preventDefault()
   button.click()
 })
+
+function completeOperation(event) {
+  if (state.operator && state.rightOperand !== "") {
+    try {
+      const result = operate(
+        state.operator,
+        state.leftOperand,
+        state.rightOperand
+      );
+      if (event) updateOperationLine(event.target.textContent);
+      resetState();
+      state.leftOperand = String(result);
+      state.justEvaluated = true;
+      updateDisplay(roundNumber(getDisplayValue()));
+    } catch (error) {
+      updateDisplay(error.message);
+    }
+  }
+}
+
+KEY_BUTTONS["="].addEventListener("click", completeOperation);
