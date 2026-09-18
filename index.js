@@ -80,6 +80,8 @@ function deleteLastEntry() {
     state.rightOperand = state.rightOperand.slice(0, -1)
   } else if (state.operator !== '') {
     state.operator = ''
+  } else if (state.leftOperand.includes('e')) {
+    state.leftOperand = ''
   } else {
     state.leftOperand = state.leftOperand.slice(0, -1)
   }
