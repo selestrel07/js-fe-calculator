@@ -7,7 +7,7 @@ const INITIAL_STATE = Object.freeze({
   justEvaluated: false,
 });
 
-const MAX_DECIMAL_LENGTH = 6;
+const MAX_DECIMAL_LENGTH = 16;
 
 const state = { ...INITIAL_STATE };
 const currentValueElement = document.querySelector(
@@ -169,14 +169,9 @@ function showErrorMessage(message) {
 
 function roundNumber(number) {
   const numberString = String(number);
-  const dotIndex = numberString.indexOf(".");
-  if (
-    dotIndex !== -1 &&
-    numberString.slice(dotIndex + 1).length > MAX_DECIMAL_LENGTH
-  ) {
-    return String(Number(number).toFixed(MAX_DECIMAL_LENGTH));
-  }
-  return numberString;
+  return numberString.length > MAX_DECIMAL_LENGTH
+    ? String((+numberString).toPrecision(MAX_DECIMAL_LENGTH)).replace(/0+e/, "e")
+    : numberString;
 }
 
 const KEY_BUTTONS = {
@@ -214,9 +209,9 @@ function completeOperation(event) {
       );
       if (event) updateOperationLine(event.target.textContent);
       resetState();
-      state.leftOperand = String(result);
+      state.leftOperand = roundNumber(result);
       state.justEvaluated = true;
-      updateDisplay(roundNumber(getDisplayValue()));
+      updateDisplay(getDisplayValue());
     } catch (error) {
       updateDisplay(error.message);
     }
