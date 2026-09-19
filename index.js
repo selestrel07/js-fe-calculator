@@ -1,4 +1,6 @@
-const operationLineElement = document.querySelector('[data-display="operation"]')
+const operationLineElement = document.querySelector(
+  '[data-display="operation"]'
+);
 
 const INITIAL_STATE = Object.freeze({
   leftOperand: "",
@@ -15,20 +17,20 @@ const currentValueElement = document.querySelector(
 );
 
 function add(a, b) {
-  return a + b
+  return a + b;
 }
 
 function subtract(a, b) {
-  return a - b
+  return a - b;
 }
 
 function multiply(a, b) {
-  return a * b
+  return a * b;
 }
 
 function divide(a, b) {
-  if (b === 0) throw new RangeError("Error: division by 0")
-  return a / b
+  if (b === 0) throw new RangeError("Error: division by 0");
+  return a / b;
 }
 
 function operate(operator, a, b) {
@@ -42,20 +44,20 @@ function operate(operator, a, b) {
 }
 
 const OPERATOR_SYMBOLS = {
-  add: '+',
-  subtract: '−',
-  multiply: '×',
-  divide: '÷'
-}
+  add: "+",
+  subtract: "−",
+  multiply: "×",
+  divide: "÷",
+};
 
 function getOperationText() {
-  if (state.leftOperand === '') return ''
+  if (state.leftOperand === "") return "";
 
-  const symbol = OPERATOR_SYMBOLS[state.operator] || ''
+  const symbol = OPERATOR_SYMBOLS[state.operator] || "";
 
   return [state.leftOperand, symbol, state.rightOperand]
-    .filter((part) => part !== '')
-    .join(' ')
+    .filter((part) => part !== "")
+    .join(" ");
 }
 
 function updateOperationLine(input) {
@@ -65,58 +67,63 @@ function updateOperationLine(input) {
 }
 
 function getDisplayValue() {
-  if (state.operator !== '' && state.rightOperand !== '') return state.rightOperand
-  return state.leftOperand || '0'
+  if (state.operator !== "" && state.rightOperand !== "")
+    return state.rightOperand;
+  return state.leftOperand || "0";
 }
 
 function clearCalculator() {
-  resetState()
-  updateDisplay('0')
-  updateOperationLine()
+  resetState();
+  updateDisplay("0");
+  updateOperationLine();
 }
 
 function deleteLastEntry() {
-  if (state.rightOperand !== '') {
-    state.rightOperand = state.rightOperand.slice(0, -1)
-  } else if (state.operator !== '') {
-    state.operator = ''
-  } else if (state.leftOperand.includes('e')) {
-    state.leftOperand = ''
+  if (state.rightOperand !== "") {
+    state.rightOperand = state.rightOperand.slice(0, -1);
+  } else if (state.operator !== "") {
+    state.operator = "";
+  } else if (state.leftOperand.includes("e")) {
+    state.leftOperand = "";
   } else {
-    state.leftOperand = state.leftOperand.slice(0, -1)
+    state.leftOperand = state.leftOperand.slice(0, -1);
   }
 
-  state.justEvaluated = false
-  updateDisplay(getDisplayValue())
-  updateOperationLine()
+  state.justEvaluated = false;
+  updateDisplay(getDisplayValue());
+  updateOperationLine();
 }
 
 function handleOperator(operator) {
-  if (state.leftOperand === '') return
-
-  if (state.rightOperand !== '') {
-    completeOperation()
-
-    if (!state.justEvaluated) return
+  if (state.leftOperand === "") {
+    state.leftOperand = "0";
   }
 
-  state.leftOperand = normalizeNumber(state.leftOperand)
-  updateDisplay(getDisplayValue())
-  state.operator = operator
-  state.justEvaluated = false
-  updateOperationLine()
+  if (state.rightOperand !== "") {
+    completeOperation();
+
+    if (!state.justEvaluated) return;
+  }
+
+  state.leftOperand = normalizeNumber(state.leftOperand);
+  updateDisplay(getDisplayValue());
+  state.operator = operator;
+  state.justEvaluated = false;
+  updateOperationLine();
 }
 
-const clearButton = document.querySelector('[data-action="clear"]')
-const backspaceButton = document.querySelector('[data-action="backspace"]')
-const operatorButtons = document.querySelectorAll('[data-operator]')
+const clearButton = document.querySelector('[data-action="clear"]');
+const backspaceButton = document.querySelector('[data-action="backspace"]');
+const operatorButtons = document.querySelectorAll("[data-operator]");
 
-clearButton.addEventListener('click', clearCalculator)
-backspaceButton.addEventListener('click', deleteLastEntry)
+clearButton.addEventListener("click", clearCalculator);
+backspaceButton.addEventListener("click", deleteLastEntry);
 
 operatorButtons.forEach((button) => {
-  button.addEventListener('click', () => handleOperator(button.dataset.operator))
-})
+  button.addEventListener("click", () =>
+    handleOperator(button.dataset.operator)
+  );
+});
 
 function updateActiveOperand(input) {
   let value = state.operator ? state.rightOperand : state.leftOperand;
@@ -184,7 +191,7 @@ function fitDisplay() {
 
 function updateDisplay(value) {
   currentValueElement.textContent = value;
-  fitDisplay()
+  fitDisplay();
 }
 
 function showErrorMessage(message) {
@@ -201,29 +208,29 @@ function roundNumber(number) {
 }
 
 const KEY_BUTTONS = {
-  '+': document.querySelector('[data-operator="add"]'),
-  '-': document.querySelector('[data-operator="subtract"]'),
-  '*': document.querySelector('[data-operator="multiply"]'),
-  '/': document.querySelector('[data-operator="divide"]'),
-  '.': document.querySelector('[data-action="decimal"]'),
-  '=': document.querySelector('[data-action="equals"]'),
+  "+": document.querySelector('[data-operator="add"]'),
+  "-": document.querySelector('[data-operator="subtract"]'),
+  "*": document.querySelector('[data-operator="multiply"]'),
+  "/": document.querySelector('[data-operator="divide"]'),
+  ".": document.querySelector('[data-action="decimal"]'),
+  "=": document.querySelector('[data-action="equals"]'),
   Enter: document.querySelector('[data-action="equals"]'),
   Backspace: backspaceButton,
   Delete: clearButton,
-  Escape: clearButton
-}
+  Escape: clearButton,
+};
 
-document.querySelectorAll('[data-digit]').forEach((button) => {
-  KEY_BUTTONS[button.dataset.digit] = button
-})
+document.querySelectorAll("[data-digit]").forEach((button) => {
+  KEY_BUTTONS[button.dataset.digit] = button;
+});
 
-document.addEventListener('keydown', (event) => {
-  const button = KEY_BUTTONS[event.key]
-  if (!button) return
+document.addEventListener("keydown", (event) => {
+  const button = KEY_BUTTONS[event.key];
+  if (!button) return;
 
-  event.preventDefault()
-  button.click()
-})
+  event.preventDefault();
+  button.click();
+});
 
 function completeOperation(event) {
   if (state.operator && state.rightOperand !== "") {
