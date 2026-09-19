@@ -95,7 +95,9 @@ function deleteLastEntry() {
 }
 
 function handleOperator(operator) {
-  if (state.leftOperand === "") return;
+  if (state.leftOperand === "") {
+    state.leftOperand = "0";
+  }
 
   if (state.rightOperand !== "") {
     completeOperation();
