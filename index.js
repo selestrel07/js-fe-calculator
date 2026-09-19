@@ -27,7 +27,7 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
-  if (b === 0) throw new RangeError("Error: You tried to divide a number by 0")
+  if (b === 0) throw new RangeError("Error: division by 0")
   return a / b
 }
 
