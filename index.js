@@ -7,7 +7,7 @@ const INITIAL_STATE = Object.freeze({
   justEvaluated: false,
 });
 
-const MAX_DISPLAY_VALUE_LENGTH = 11;
+const MAX_DISPLAY_VALUE_LENGTH = 12;
 
 const state = { ...INITIAL_STATE };
 const currentValueElement = document.querySelector(
@@ -100,6 +100,8 @@ function handleOperator(operator) {
     if (!state.justEvaluated) return
   }
 
+  state.leftOperand = normalizeNumber(state.leftOperand)
+  updateDisplay(getDisplayValue())
   state.operator = operator
   state.justEvaluated = false
   updateOperationLine()
@@ -118,6 +120,7 @@ operatorButtons.forEach((button) => {
 
 function updateActiveOperand(input) {
   let value = state.operator ? state.rightOperand : state.leftOperand;
+  if (value.length >= MAX_DISPLAY_VALUE_LENGTH) return value;
   switch (input) {
     case ".": {
       if (!value) value = "0.";
@@ -191,7 +194,9 @@ function showErrorMessage(message) {
 function roundNumber(number) {
   const numberString = String(number);
   return numberString.length > MAX_DISPLAY_VALUE_LENGTH
-    ? String((+numberString).toPrecision(MAX_DISPLAY_VALUE_LENGTH)).replace(/0+e/, "e")
+    ? normalizeNumber(
+        String((+numberString).toPrecision(MAX_DISPLAY_VALUE_LENGTH))
+      )
     : numberString;
 }
 
@@ -222,6 +227,9 @@ document.addEventListener('keydown', (event) => {
 
 function completeOperation(event) {
   if (state.operator && state.rightOperand !== "") {
+    state.rightOperand = normalizeNumber(state.rightOperand);
+    updateDisplay(getDisplayValue());
+    updateOperationLine();
     try {
       const result = operate(
         state.operator,
@@ -241,3 +249,9 @@ function completeOperation(event) {
 }
 
 KEY_BUTTONS["="].addEventListener("click", completeOperation);
+
+function normalizeNumber(numberString) {
+  return numberString
+    .replace(/(\.\d*?[1-9])0+$|\.0*$|\.?$/, "$1")
+    .replace(/0+e/, "e");
+}
